@@ -1,13 +1,20 @@
 <section class="orders-show">
-
   <header class="page-header">
     <h1>Order #<%= @order.id %></h1>
+    <h4>Thank you for your order!</h4>
+    <p>Email: <%= @order.email %></p>
+    <p>Total Amount: <%= humanized_money_with_symbol @order.total %></p>
   </header>
 
-  <div class="order-summary jumbotron">
-    <h4>Thank you for your order!</h4>
+  <div>
+    <h3>Order Details:</h3>
+    <div class="line-items">
+      <% @order.line_items.each do |line_item| %>
+        <%= render partial: "line_item", locals: { line_item: line_item } %>
+      <% end %>
+    </div>
+    
   </div>
 
   <%= link_to "Continue Shopping", root_path, class: 'btn btn-lg btn-primary' %>
-
 </section>
