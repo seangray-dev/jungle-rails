@@ -29,4 +29,20 @@ class ApplicationController < ActionController::Base
     }
     cookies[:cart]
   end
+
+  helper_method :current_user, :logged_in?
+
+  private
+
+  def current_user
+    @current_user ||= User.find_by(id: session[:user_id])
+  end
+
+  def logged_in?
+    !current_user.nil?
+  end
+
+  def require_login
+    redirect_to login_path, alert: 'Please log in to access this page' unless logged_in?
+  end
 end
